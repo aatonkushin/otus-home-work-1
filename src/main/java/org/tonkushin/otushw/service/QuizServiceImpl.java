@@ -40,7 +40,7 @@ public class QuizServiceImpl implements QuizService {
         long total = questions.size();
         long passed = questions.stream().filter(Question::isCorrect).count();
 
-        return (passed / total) > 0.4f;
+        return ((float)passed / total) > 0.4f;
     }
 
     /**
