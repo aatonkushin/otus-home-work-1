@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Реализация сервиса отвечающего за чтение данных из csv файла
  */
-public class QuestionsReaderServiceImpl implements QuizRepository {
+public class QuizRepositoryImpl implements QuizRepository {
 
     private String filename;    //имя файла из которого читаем
 
@@ -25,13 +25,13 @@ public class QuestionsReaderServiceImpl implements QuizRepository {
      * @param filename имя файла для чтения
      * @param columns поля класса Question, они же колонки csv-файла
      */
-    public QuestionsReaderServiceImpl(String filename, String[] columns) {
+    public QuizRepositoryImpl(String filename, String[] columns) {
         this.filename = filename;
         this.columns = columns;
     }
 
     public List<Question> readQuestionsFromFile() {
-        ColumnPositionMappingStrategy<Question> strategy = new ColumnPositionMappingStrategy<Question>();
+        ColumnPositionMappingStrategy<Question> strategy = new ColumnPositionMappingStrategy<>();
         strategy.setType(Question.class);
         strategy.setColumnMapping(columns);
         CsvToBean csv = new CsvToBean();
@@ -40,7 +40,7 @@ public class QuestionsReaderServiceImpl implements QuizRepository {
         try {
             Resource resource = new ClassPathResource(filename);
 
-            try (CSVReader csvReader = new CSVReader(new FileReader(resource.getURI().getPath()), ';');) {
+            try (CSVReader csvReader = new CSVReader(new FileReader(resource.getURI().getPath()), ';')) {
                 questions = csv.parse(strategy, csvReader);
             }
         } catch (IOException e) {

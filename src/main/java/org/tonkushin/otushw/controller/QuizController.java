@@ -3,7 +3,7 @@ package org.tonkushin.otushw.controller;
 /**
  * Отвечает за взаимодействие с пользователем
  */
-public interface ConsoleController {
+public interface QuizController {
     /**
      * Начинает тестирование пользователя
      */
