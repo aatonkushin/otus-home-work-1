@@ -59,9 +59,9 @@ class QuizServiceImplTest {
         List<Question> questions = new ArrayList<>(5);
         questions.add(new Question("Вопрос 1", "1", "2", "3", 1));
         questions.add(new Question("Вопрос 2", "1", "2", "3", 1));
-        questions.add(new Question("Вопрос 2", "1", "2", "3", 1));
-        questions.add(new Question("Вопрос 2", "1", "2", "3", 1));
-        questions.add(new Question("Вопрос 2", "1", "2", "3", 1));
+        questions.add(new Question("Вопрос 3", "1", "2", "3", 1));
+        questions.add(new Question("Вопрос 4", "1", "2", "3", 4));
+        questions.add(new Question("Вопрос 5", "1", "2", "3", 1));
 
         return questions;
     }
