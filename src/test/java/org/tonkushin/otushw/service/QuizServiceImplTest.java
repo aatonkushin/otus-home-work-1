@@ -55,6 +55,16 @@ class QuizServiceImplTest {
         Assertions.assertEquals(false, service.getPassed());
     }
 
+    @Test
+    void getQuestionsNotEmpty() {
+        QuizRepository repository = Mockito.mock(QuizRepository.class);
+        Mockito.when(repository.readQuestionsFromFile()).thenReturn(getQuestions());
+
+        QuizService service = new QuizServiceImpl(repository);
+
+        Assertions.assertFalse(service.getQuestions().isEmpty());
+    }
+
     List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>(5);
         questions.add(new Question("Вопрос 1", "1", "2", "3", 1));

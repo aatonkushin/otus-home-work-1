@@ -43,6 +43,12 @@ public class QuizServiceImpl implements QuizService {
         return ((float)passed / total) > 0.4f;
     }
 
+    @Override
+    public List<Question> getQuestions() {
+        loadData();
+        return this.questions;
+    }
+
     /**
      * Загружает данные
      */
