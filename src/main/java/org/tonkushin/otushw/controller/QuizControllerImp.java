@@ -9,19 +9,18 @@ import java.util.Scanner;
  * Реализация контроллера для взаимодействия с пользователем
  */
 public class QuizControllerImp implements QuizController {
-
-    private QuizService service; //бизнес-логика
-    private Scanner sc;          //считывает из консоли
-
-    private final String welcomeTitle= "Добро пожаловать в программу по проведению тестирования студентов!\n"+
+    private static final String WELCOME_TITLE= "Добро пожаловать в программу по проведению тестирования студентов!\n"+
             "Вам будет представлено 5 вопросов и три варианта ответов для каждого из них.\n" +
             "Выбор ответа производится нажатием соответствующей цифры на клавиатуре.\n" +
             "Для начала тестирования нажмите Enter или введите exit для выхода...";
 
-    private final String passedTitle="ТЕСТ СДАН";
-    private final String failedTitle = "ТЕСТ НЕ СДАН";
-    private final String wrongInputTitle = "Ошибка ввода - ответ не засчитан";
+    private static final String PASSED_TITLE="ТЕСТ СДАН";
+    private static final String FAILED_TITLE = "ТЕСТ НЕ СДАН";
+    private static final String WRONG_INPUT_TITLE = "Ошибка ввода - ответ не засчитан";
+    private static final String EXIT_CMD = "exit";
 
+    private QuizService service; //бизнес-логика
+    private Scanner sc;          //считывает из консоли
 
     public QuizControllerImp(QuizService service) {
         this.service = service;
@@ -30,15 +29,11 @@ public class QuizControllerImp implements QuizController {
 
     @Override
     public void startQuiz() {
-//        System.out.println("Добро пожаловать в программу по проведению тестирования студентов!");
-//        System.out.println("Вам будет представлено 5 вопросов и три варианта ответов для каждого из них. " +
-//                "Выбор ответа производится нажатием соответствующей цифры на клавиатуре.");
-//        System.out.println("Для начала тестирования нажмите любую клавишу или введите exit для выхода...");
-        System.out.println(welcomeTitle);
+        System.out.println(WELCOME_TITLE);
         String text = sc.nextLine();
 
         //Выходим, если пользователь набрал exit
-        if (text.equals("exit")) {
+        if (EXIT_CMD.equals(text)) {
             return;
         }
 
@@ -56,17 +51,17 @@ public class QuizControllerImp implements QuizController {
                 text = sc.nextLine();
 
                 //Выходим, если пользователь набрал exit
-                if (text.equals("exit")) {
+                if (EXIT_CMD.equals(text)) {
                     return;
                 }
 
                 question.setUserAnswerNo(Integer.parseInt(text));
             } catch (NumberFormatException e) {
-                System.out.println(wrongInputTitle);
+                System.out.println(WRONG_INPUT_TITLE);
             }
         }
 
-        String result = service.getPassed() ? passedTitle : failedTitle;
+        String result = service.getPassed() ? PASSED_TITLE : FAILED_TITLE;
         System.out.println(result);
     }
 }
