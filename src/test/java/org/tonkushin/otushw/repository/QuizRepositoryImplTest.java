@@ -5,12 +5,11 @@ import org.junit.jupiter.api.Test;
 
 class QuizRepositoryImplTest {
     private String filename = "questions.csv";
-    private String[] columns = {"question", "answer1", "answer2", "answer3", "correctAnswerNo"};
 
     @Test
     void readQuestionsFromFileNotNullTest() {
 
-        QuizRepository repository = new QuizRepositoryImpl(filename, columns);
+        QuizRepository repository = new QuizRepositoryImpl(filename);
 
         Assertions.assertNotEquals(null, repository.readQuestionsFromFile());
     }
@@ -18,7 +17,7 @@ class QuizRepositoryImplTest {
     @Test
     void readQuestionsFromFileNotEmptyTest() {
 
-        QuizRepository repository = new QuizRepositoryImpl(filename, columns);
+        QuizRepository repository = new QuizRepositoryImpl(filename);
 
         Assertions.assertNotEquals(0, repository.readQuestionsFromFile().size());
     }

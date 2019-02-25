@@ -7,6 +7,7 @@ import org.tonkushin.otushw.model.Question;
 import org.tonkushin.otushw.repository.QuizRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class QuizServiceImplTest {
@@ -67,11 +68,13 @@ class QuizServiceImplTest {
 
     List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>(5);
-        questions.add(new Question("Вопрос 1", "1", "2", "3", 1));
-        questions.add(new Question("Вопрос 2", "1", "2", "3", 1));
-        questions.add(new Question("Вопрос 3", "1", "2", "3", 1));
-        questions.add(new Question("Вопрос 4", "1", "2", "3", 4));
-        questions.add(new Question("Вопрос 5", "1", "2", "3", 1));
+        String[] arrAnswers = {"1", "2", "3"};
+        List<String> answers = Arrays.asList(arrAnswers);
+        questions.add(new Question("Вопрос 1", 1, answers));
+        questions.add(new Question("Вопрос 2", 1, answers));
+        questions.add(new Question("Вопрос 3", 1, answers));
+        questions.add(new Question("Вопрос 4", 4, answers));
+        questions.add(new Question("Вопрос 5", 1, answers));
 
         return questions;
     }

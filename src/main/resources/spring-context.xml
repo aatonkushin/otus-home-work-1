@@ -5,15 +5,6 @@
     <!--Репозиторий чтения из csv-файла -->
     <bean id="quizRepositoryImpl" class="org.tonkushin.otushw.repository.QuizRepositoryImpl">
         <constructor-arg value="questions.csv" type="java.lang.String"/>
-        <constructor-arg type="java.lang.String[]">
-            <array>
-                <value>question</value>
-                <value>answer1</value>
-                <value>answer2</value>
-                <value>answer3</value>
-                <value>correctAnswerNo</value>
-            </array>
-        </constructor-arg>
     </bean>
     <!--Сервис с логикой-->
     <bean id="quizService" class="org.tonkushin.otushw.service.QuizServiceImpl">

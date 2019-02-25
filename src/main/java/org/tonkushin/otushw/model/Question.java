@@ -7,11 +7,9 @@ import java.util.List;
  */
 public class Question {
     private String question;            //вопрос
-    private String answer1;             //вариант ответа 1
-    private String answer2;             //вариант ответа 2
-    private String answer3;             //вариант ответа 3
     private Integer correctAnswerNo;    //номер правильного ответа
     private Integer userAnswerNo = -1;  //ответ пользователя
+    private List<String> answers;       //варианты ответов
 
     /**
      * вопрос
@@ -27,54 +25,6 @@ public class Question {
      */
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    /**
-     * вариант ответа 1
-     * @return вариант ответа 1
-     */
-    public String getAnswer1() {
-        return answer1;
-    }
-
-    /**
-     * вариант ответа 1
-     * @param answer1 вариант ответа 1
-     */
-    public void setAnswer1(String answer1) {
-        this.answer1 = answer1;
-    }
-
-    /**
-     * вариант ответа 2
-     * @return вариант ответа 2
-     */
-    public String getAnswer2() {
-        return answer2;
-    }
-
-    /**
-     * вариант ответа 2
-     * @param answer2 вариант ответа 2
-     */
-    public void setAnswer2(String answer2) {
-        this.answer2 = answer2;
-    }
-
-    /**
-     * вариант ответа 3
-     * @return вариант ответа 3
-     */
-    public String getAnswer3() {
-        return answer3;
-    }
-
-    /**
-     * вариант ответа 3
-     * @param answer3 вариант ответа 3
-     */
-    public void setAnswer3(String answer3) {
-        this.answer3 = answer3;
     }
 
     /**
@@ -110,6 +60,22 @@ public class Question {
     }
 
     /**
+     * Варианты ответов
+     * @return варианты ответов
+     */
+    public List<String> getAnswers() {
+        return answers;
+    }
+
+    /**
+     * Варианты ответов
+     * @param answers варианты ответов
+     */
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
+    }
+
+    /**
      * Правильность ответа пользователя
      * @return true - если ответ правильный
      */
@@ -126,16 +92,11 @@ public class Question {
     /**
      * Конструктор с параметрами для быстрой иницализацими
      * @param question вапрос
-     * @param answer1 ответ 1
-     * @param answer2 ответ 2
-     * @param answer3 ответ 3
      * @param correctAnswerNo номер правильного ответа
      */
-    public Question(String question, String answer1, String answer2, String answer3, Integer correctAnswerNo) {
+    public Question(String question, Integer correctAnswerNo, List<String> answers) {
         this.question = question;
-        this.answer1 = answer1;
-        this.answer2 = answer2;
-        this.answer3 = answer3;
         this.correctAnswerNo = correctAnswerNo;
+        this.answers = answers;
     }
 }

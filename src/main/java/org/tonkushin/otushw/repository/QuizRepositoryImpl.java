@@ -1,14 +1,14 @@
 package org.tonkushin.otushw.repository;
 
 import com.opencsv.CSVReader;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.tonkushin.otushw.model.Question;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,30 +18,35 @@ public class QuizRepositoryImpl implements QuizRepository {
 
     private String filename;    //имя файла из которого читаем
 
-    private String[] columns;   //поля класса Question, они же колонки csv-файла
-
     /**
      * Конструктор с параметрами
+     *
      * @param filename имя файла для чтения
-     * @param columns поля класса Question, они же колонки csv-файла
      */
-    public QuizRepositoryImpl(String filename, String[] columns) {
+    public QuizRepositoryImpl(String filename) {
         this.filename = filename;
-        this.columns = columns;
     }
 
     public List<Question> readQuestionsFromFile() {
-        ColumnPositionMappingStrategy<Question> strategy = new ColumnPositionMappingStrategy<>();
-        strategy.setType(Question.class);
-        strategy.setColumnMapping(columns);
-        CsvToBean csv = new CsvToBean();
-
-        List<Question> questions = null;
+        List<Question> questions = new ArrayList<>();
         try {
             Resource resource = new ClassPathResource(filename);
 
             try (CSVReader csvReader = new CSVReader(new FileReader(resource.getURI().getPath()), ';')) {
-                questions = csv.parse(strategy, csvReader);
+                List<String[]> myEntries = csvReader.readAll();
+
+                for (String[] line : myEntries) {
+                    Question q = new Question();
+                    //Вопрос
+                    q.setQuestion(line[0]);
+                    //Правильный ответ
+                    q.setCorrectAnswerNo(Integer.parseInt(line[1]));
+                    //Варианты ответов (все оставшиеся колонки в строке)
+                    List<String> answers = new ArrayList<>(Arrays.asList(line).subList(2, line.length));
+                    q.setAnswers(answers);
+
+                    questions.add(q);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
