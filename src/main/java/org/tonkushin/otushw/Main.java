@@ -1,7 +1,12 @@
 package org.tonkushin.otushw;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.tonkushin.otushw.controller.QuizController;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Otus homework 1");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        QuizController controller = context.getBean(QuizController.class);
+        controller.startQuiz();
     }
 }
