@@ -1,45 +1,69 @@
 package org.tonkushin.otushw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.tonkushin.otushw.model.Question;
 import org.tonkushin.otushw.service.QuizService;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
  * Реализация контроллера для взаимодействия с пользователем
  */
 @Service
-public class QuizControllerImp implements QuizController {
-    private static final String WELCOME_TITLE = "Добро пожаловать в программу по проведению тестирования студентов!\n" +
-            "Вам будет представлено 5 вопросов и несколько вариантов ответов для каждого из них.\n" +
-            "Выбор ответа производится нажатием соответствующей цифры на клавиатуре.\n" +
-            "Для начала тестирования нажмите Enter или введите exit для выхода...";
-    private static final String PASSED_TITLE = "ТЕСТ СДАН";
-    private static final String FAILED_TITLE = "ТЕСТ НЕ СДАН";
-    private static final String WRONG_INPUT_TITLE = "Ошибка ввода - ответ не засчитан";
-    private static final String EXIT_CMD = "exit";
+public class QuizControllerImpl implements QuizController {
 
-    private QuizService service; //бизнес-логика
-    private Scanner sc;          //считывает из консоли
+    private QuizService service;    //бизнес-логика
+    private MessageSource ms;       //сообщения
+    private Scanner sc;             //считывает из консоли
+    private Locale locale;          //локаль2
+    private String[] avilableLanguages;     //доступные языки
 
     @Autowired
-    public QuizControllerImp(QuizService service) {
+    public QuizControllerImpl(QuizService service, MessageSource ms, @Value("${available_languages}") String[] avilableLanguages) {
         this.service = service;
-        sc = new Scanner(System.in);
+        this.ms = ms;
+        this.sc = new Scanner(System.in);
+        this.avilableLanguages = avilableLanguages;
+        this.locale = Locale.getDefault();
     }
 
     @Override
     public void startQuiz() {
-        System.out.println(WELCOME_TITLE);
+        //Выбор языка
+        System.out.println(ms.getMessage("select_language", new String[]{}, locale));
+
+        //Перечисляем доступные языки
+        for (int i = 0; i < avilableLanguages.length; i++) {
+            String tag = avilableLanguages[i];
+            System.out.println((i + 1) + ". " + Locale.forLanguageTag(tag).getDisplayLanguage(Locale.forLanguageTag(tag)));
+        }
+
+        //Ожидаем ввода пользователя
         String text = sc.nextLine();
 
-        //Выходим, если пользователь набрал exit
-        if (EXIT_CMD.equals(text)) {
+        //Создаём локаль в зависимости от ввода пользователя.
+        try {
+            int n = Integer.parseInt(text);
+            locale = Locale.forLanguageTag(avilableLanguages[n - 1]);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(ms.getMessage("lang_not_recognized", new String[]{}, locale));
             return;
         }
+
+        //Приветствие пользователя.
+        System.out.println(ms.getMessage("welcome_title", new String[]{}, locale));
+        text = sc.nextLine();
+
+        //Выходим, если пользователь набрал exit
+        if (ms.getMessage("exit_cmd", new String[]{}, locale).equals(text)) {
+            return;
+        }
+
+        service.setLocale(locale);
 
         //Задаём вопросы поочерёдно
         while (service.hasNextQuestion()) {
@@ -56,19 +80,21 @@ public class QuizControllerImp implements QuizController {
                 text = sc.nextLine();
 
                 //Выходим, если пользователь набрал exit
-                if (EXIT_CMD.equals(text)) {
+                if (ms.getMessage("exit_cmd", new String[]{}, locale).equals(text)) {
                     return;
                 }
 
                 //Вычитаем 1, т.к. вопросы для пользователя начинаются с 1, а массив с 0
-                question.setUserAnswerNo(Integer.parseInt(text)-1);
+                question.setUserAnswerNo(Integer.parseInt(text) - 1);
             } catch (NumberFormatException e) {
-                System.out.println(WRONG_INPUT_TITLE);
+                System.out.println(ms.getMessage("wrong_input_title", new String[]{}, locale));
             }
         }
 
         //Выводим результат
-        String result = service.getPassed() ? PASSED_TITLE : FAILED_TITLE;
+        String result = service.getPassed()
+                ? ms.getMessage("passed_title", new String[]{}, locale)
+                : ms.getMessage("failed_title", new String[]{}, locale);
         System.out.println(result);
     }
 }

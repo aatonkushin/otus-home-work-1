@@ -9,13 +9,15 @@ import org.tonkushin.otushw.repository.QuizRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 class QuizServiceImplTest {
+    private Locale locale = Locale.getDefault();
 
     @Test
     void hasNextQuestion() {
         QuizRepository repository = Mockito.mock(QuizRepository.class);
-        Mockito.when(repository.readQuestionsFromFile()).thenReturn(getQuestions());
+        Mockito.when(repository.readQuestionsFromFile(locale)).thenReturn(getQuestions());
 
         QuizService service = new QuizServiceImpl(repository);
 
@@ -25,7 +27,7 @@ class QuizServiceImplTest {
     @Test
     void getNextQuestion() {
         QuizRepository repository = Mockito.mock(QuizRepository.class);
-        Mockito.when(repository.readQuestionsFromFile()).thenReturn(getQuestions());
+        Mockito.when(repository.readQuestionsFromFile(locale)).thenReturn(getQuestions());
 
         QuizService service = new QuizServiceImpl(repository);
 
@@ -35,11 +37,11 @@ class QuizServiceImplTest {
     @Test
     void getPassedTrue() {
         QuizRepository repository = Mockito.mock(QuizRepository.class);
-        Mockito.when(repository.readQuestionsFromFile()).thenReturn(getQuestions());
+        Mockito.when(repository.readQuestionsFromFile(locale)).thenReturn(getQuestions());
 
         QuizService service = new QuizServiceImpl(repository);
 
-        while (service.hasNextQuestion()){
+        while (service.hasNextQuestion()) {
             service.getNextQuestion().setUserAnswerNo(1);
         }
 
@@ -49,7 +51,7 @@ class QuizServiceImplTest {
     @Test
     void getPassedFalse() {
         QuizRepository repository = Mockito.mock(QuizRepository.class);
-        Mockito.when(repository.readQuestionsFromFile()).thenReturn(getQuestions());
+        Mockito.when(repository.readQuestionsFromFile(locale)).thenReturn(getQuestions());
 
         QuizService service = new QuizServiceImpl(repository);
 
@@ -59,7 +61,7 @@ class QuizServiceImplTest {
     @Test
     void getQuestionsNotEmpty() {
         QuizRepository repository = Mockito.mock(QuizRepository.class);
-        Mockito.when(repository.readQuestionsFromFile()).thenReturn(getQuestions());
+        Mockito.when(repository.readQuestionsFromFile(locale)).thenReturn(getQuestions());
 
         QuizService service = new QuizServiceImpl(repository);
 
