@@ -1,5 +1,8 @@
 package org.tonkushin.otushw.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.tonkushin.otushw.model.Question;
 import org.tonkushin.otushw.service.QuizService;
 
@@ -8,6 +11,7 @@ import java.util.Scanner;
 /**
  * Реализация контроллера для взаимодействия с пользователем
  */
+@Service
 public class QuizControllerImp implements QuizController {
     private static final String WELCOME_TITLE = "Добро пожаловать в программу по проведению тестирования студентов!\n" +
             "Вам будет представлено 5 вопросов и несколько вариантов ответов для каждого из них.\n" +
@@ -21,6 +25,7 @@ public class QuizControllerImp implements QuizController {
     private QuizService service; //бизнес-логика
     private Scanner sc;          //считывает из консоли
 
+    @Autowired
     public QuizControllerImp(QuizService service) {
         this.service = service;
         sc = new Scanner(System.in);
