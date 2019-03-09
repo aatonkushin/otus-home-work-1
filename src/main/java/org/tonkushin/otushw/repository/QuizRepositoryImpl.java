@@ -1,8 +1,12 @@
 package org.tonkushin.otushw.repository;
 
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Repository;
 import org.tonkushin.otushw.model.Question;
 
 import java.io.FileReader;
@@ -10,10 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Реализация сервиса отвечающего за чтение данных из csv файла
  */
+@Repository
 public class QuizRepositoryImpl implements QuizRepository {
 
     private String filename;    //имя файла из которого читаем
@@ -23,13 +29,14 @@ public class QuizRepositoryImpl implements QuizRepository {
      *
      * @param filename имя файла для чтения
      */
-    public QuizRepositoryImpl(String filename) {
+    public QuizRepositoryImpl(@Value("${filename}") String filename) {
         this.filename = filename;
     }
 
-    public List<Question> readQuestionsFromFile() {
+    public List<Question> readQuestionsFromFile(Locale locale) {
         List<Question> questions = new ArrayList<>();
         try {
+            filename = String.format(filename, locale.getLanguage());
             Resource resource = new ClassPathResource(filename);
 
             try (CSVReader csvReader = new CSVReader(new FileReader(resource.getURI().getPath()), ';')) {
