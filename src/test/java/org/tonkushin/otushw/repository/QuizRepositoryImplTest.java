@@ -2,7 +2,6 @@ package org.tonkushin.otushw.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.cglib.core.Local;
 
 import java.util.Locale;
 
