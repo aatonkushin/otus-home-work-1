@@ -20,7 +20,7 @@ public class QuizControllerImpl implements QuizController {
     private MessageSource ms;       //сообщения
     private Scanner sc;             //считывает из консоли
     private Locale locale;          //локаль2
-    private String[] avilableLanguages;     //доступные языки
+    private String[] avilableLanguages;     //доступные языкия
 
     @Autowired
     public QuizControllerImpl(QuizService service, MessageSource ms, @Value("${available_languages}") String[] avilableLanguages) {

@@ -13,21 +13,21 @@ import org.tonkushin.otushw.controller.QuizController;
 @EnableAspectJAutoProxy
 @SpringBootApplication
 @EnableConfigurationProperties
-public class Main implements CommandLineRunner {
+public class Main {
 
-    private final QuizController controller;
+//    private final QuizController controller;
 
-    @Autowired
-    public Main(QuizController controller) {
-        this.controller = controller;
-    }
+//    @Autowired
+//    public Main(QuizController controller) {
+//        this.controller = controller;
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        controller.startQuiz();
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+//        controller.startQuiz();
+//    }
 }
