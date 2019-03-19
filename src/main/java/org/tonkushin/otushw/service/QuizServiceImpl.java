@@ -20,6 +20,7 @@ public class QuizServiceImpl implements QuizService {
     private List<Question> questions;               //список вопросв
     private Iterator<Question> iterator;            //итератор для выдачи вопросов по одному
     private Locale locale = Locale.getDefault();    //локаль для чтения соответсвующего файла
+    private String username;                        //имя пользователя
 
     @Autowired
     public QuizServiceImpl(QuizRepository repository) {
@@ -59,6 +60,16 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     /**
