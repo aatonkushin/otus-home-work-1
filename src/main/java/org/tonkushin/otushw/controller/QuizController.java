@@ -18,4 +18,18 @@ public interface QuizController {
      * Регистрация пользователя
      */
     void login(String username);
+
+    void results();
+
+    /**
+     * Пользователь зарегистрирован
+     * @return true если зарегистрирован
+     */
+    boolean isUserLoggedIn();
+
+    /**
+     * Тест окончен
+     * @return true если тест окончен
+     */
+    boolean isTestCompleted();
 }

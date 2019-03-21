@@ -1,8 +1,10 @@
 package org.tonkushin.otushw.shell;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 import org.tonkushin.otushw.controller.QuizController;
 import org.tonkushin.otushw.service.MessagesService;
 
@@ -36,5 +38,25 @@ public class ShellCommands {
         controller.login(name);
         String[] params = new String[]{name};
         return messagesService.getMessage("user_logged_in", params);
+    }
+
+    @ShellMethod(value = "Результаты тестирования")
+    public String results() {
+        controller.results();
+        return "";
+    }
+
+    @ShellMethodAvailability
+    public Availability startAvailability() {
+        return controller.isUserLoggedIn()
+                ? Availability.available()
+                : Availability.unavailable(messagesService.getMessage("user_not_logged_in"));
+    }
+
+    @ShellMethodAvailability
+    public Availability resultsAvailability(){
+        return controller.isTestCompleted()
+                ? Availability.available()
+                : Availability.unavailable(messagesService.getMessage("test_not_finished"));
     }
 }

@@ -17,6 +17,7 @@ public class QuizControllerImpl implements QuizController {
     private QuizService service;                //бизнес-логика
     private MessagesService messagesService;    //сообщения
     private Scanner sc;                         //считывает из консоли
+    private boolean testCompleted = false;        //тест выполнен
 
     @Autowired
     public QuizControllerImpl(QuizService service, MessagesService messagesService) {
@@ -27,6 +28,7 @@ public class QuizControllerImpl implements QuizController {
 
     @Override
     public void startQuiz() {
+        testCompleted = false;
         //Приветствие пользователя.
         System.out.println(messagesService.getMessage("welcome_title"));
         String text = sc.nextLine();
@@ -71,6 +73,8 @@ public class QuizControllerImpl implements QuizController {
                 ? messagesService.getMessage("passed_title")
                 : messagesService.getMessage("failed_title");
         System.out.println(result);
+
+        testCompleted = true;
     }
 
     @Override
@@ -94,5 +98,25 @@ public class QuizControllerImpl implements QuizController {
     @Override
     public void login(String username) {
         service.setUsername(username);
+    }
+
+    @Override
+    public void results() {
+        System.out.println(service.getUsername());
+        //Выводим результат
+        String result = service.getPassed()
+                ? messagesService.getMessage("passed_title")
+                : messagesService.getMessage("failed_title");
+        System.out.println(result);
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return service.getUsername() != null && !service.getUsername().isEmpty();
+    }
+
+    @Override
+    public boolean isTestCompleted() {
+        return testCompleted;
     }
 }
