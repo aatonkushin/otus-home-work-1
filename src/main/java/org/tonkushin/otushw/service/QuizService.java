@@ -43,4 +43,18 @@ public interface QuizService {
      * @param locale локаль
      */
     void setLocale(Locale locale);
+
+    /**
+     * Устанавливает имя текущего пользователя
+     *
+     * @param username имя пользователя
+     */
+    void setUsername(String username);
+
+    /**
+     * возвращает имя зарегистрированного пользователя
+     *
+     * @return имя зарегистрированного пользователя
+     */
+    String getUsername();
 }

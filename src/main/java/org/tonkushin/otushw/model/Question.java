@@ -13,6 +13,7 @@ public class Question {
 
     /**
      * вопрос
+     *
      * @return вопрос
      */
     public String getQuestion() {
@@ -21,6 +22,7 @@ public class Question {
 
     /**
      * вопрос
+     *
      * @param question вопрос
      */
     public void setQuestion(String question) {
@@ -29,6 +31,7 @@ public class Question {
 
     /**
      * Номер правильного ответа
+     *
      * @return номер правильного ответа
      */
     public Integer getCorrectAnswerNo() {
@@ -37,6 +40,7 @@ public class Question {
 
     /**
      * Номер правильного ответа
+     *
      * @param correctAnswerNo номер правильного ответа
      */
     public void setCorrectAnswerNo(Integer correctAnswerNo) {
@@ -45,6 +49,7 @@ public class Question {
 
     /**
      * Ответ пользователя
+     *
      * @return Ответ пользователя
      */
     public Integer getUserAnswerNo() {
@@ -53,6 +58,7 @@ public class Question {
 
     /**
      * Ответ пользователя
+     *
      * @param userAnswerNo Ответ пользователя
      */
     public void setUserAnswerNo(Integer userAnswerNo) {
@@ -61,6 +67,7 @@ public class Question {
 
     /**
      * Варианты ответов
+     *
      * @return варианты ответов
      */
     public List<String> getAnswers() {
@@ -69,6 +76,7 @@ public class Question {
 
     /**
      * Варианты ответов
+     *
      * @param answers варианты ответов
      */
     public void setAnswers(List<String> answers) {
@@ -77,6 +85,7 @@ public class Question {
 
     /**
      * Правильность ответа пользователя
+     *
      * @return true - если ответ правильный
      */
     public boolean isCorrect() {
@@ -91,12 +100,23 @@ public class Question {
 
     /**
      * Конструктор с параметрами для быстрой иницализацими
-     * @param question вапрос
+     *
+     * @param question        вапрос
      * @param correctAnswerNo номер правильного ответа
      */
     public Question(String question, Integer correctAnswerNo, List<String> answers) {
         this.question = question;
         this.correctAnswerNo = correctAnswerNo;
         this.answers = answers;
+    }
+
+    public String getQuestionAndAnswers() {
+        StringBuilder retVal = new StringBuilder();
+        retVal.append(this.question).append("\n");
+        for (int i = 0; i < answers.size(); i++) {
+            retVal.append(i + 1).append(". ").append(answers.get(i)).append("\n");
+        }
+
+        return retVal.toString();
     }
 }

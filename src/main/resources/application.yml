@@ -1,2 +1,5 @@
 filename: questions_%s.csv
 available_languages: ru,en
+logging:
+  level:
+    root: ERROR

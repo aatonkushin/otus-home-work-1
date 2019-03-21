@@ -28,3 +28,8 @@
 Перенести все свойства в application.yml
 Сделать собственный баннер для приложения.
 Перенести тесты и использовать spring-boot-test-starter
+
+# otus-home-work-4
+Перевести приложение для проведения опросов на Spring Shell
+Подключить Spring Shell, используя starter.
+Написать юнит-тесты и использовать spring-boot-test-starter
